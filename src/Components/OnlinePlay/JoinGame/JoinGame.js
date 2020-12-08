@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import io from "socket.io-client";
 let socket;
 export default function JoinGame() {
@@ -12,10 +12,14 @@ export default function JoinGame() {
     //whene game started
     socket.on("GameStarted", ({ hosterName }) => {
       setFriendName(hosterName);
-      alert(`you and ${hosterName} are playing on room ${RoomId}`);
+      window.location.href = "/GameScreen";
     });
   }, []);
   const onJoinGameHandler = () => {
+    socket.on("requestError", ({ error }) => {
+      alert(error);
+      socket.emit("leave", { roomId: RoomId });
+    });
     socket.emit("joinGame", { name, roomId: RoomId }, ({ error }) => {
       if (error) alert(error);
     });

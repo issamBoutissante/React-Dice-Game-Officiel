@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import io from "socket.io-client";
+import Dialog from "../../Dialog/Dialog";
 let socket;
 
 export default function StartNewGame() {
@@ -8,6 +9,8 @@ export default function StartNewGame() {
   const [RoomId, setRoomId] = useState("");
   const [FriendName, setFriendName] = useState("");
   const [showId, setShowId] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
+  const [FriendId, setFriendId] = useState("");
   //whene game started
   useEffect(() => {
     //initialize a socket
@@ -16,20 +19,23 @@ export default function StartNewGame() {
     //on game started
     socket.on("GameStarted", ({ friendName }) => {
       setFriendName(friendName);
-      alert(`you and ${friendName} are playing on room ${RoomId}`);
+      window.location.href = "/GameScreen";
     });
   }, []);
-
+  const onAnswerHandler = (isAccepted) => {
+    socket.emit("requestAnswer", {
+      isAccepted,
+      name,
+      nameId: FriendId,
+    });
+  };
   const onStartNewGameHandler = () => {
     socket.emit("startNewGame", { name }, ({ roomId }) => {
       setRoomId(roomId);
       setShowId(true);
-      socket.on("joinRequest", ({ name }) => {
-        alert(`${name} asked to join the game`);
-        socket.emit("requestAnswer", {
-          isAccepted: true,
-          name,
-        });
+      socket.on("joinRequest", ({ name, nameId }) => {
+        setFriendId(nameId);
+        setShowDialog(true);
       });
     });
   };
@@ -45,6 +51,7 @@ export default function StartNewGame() {
       {showId ? (
         <input type="text" value={`this is your id : ${RoomId}`}></input>
       ) : null}
+      {showDialog ? <Dialog onAnswerHandler={onAnswerHandler}></Dialog> : null}
     </div>
   );
 }
