@@ -19,7 +19,9 @@ export default function GameScreen(props) {
     setPlayer1(params["hosterName"]);
     setPlayer2(params["?friendName"]);
     Socket.on("DiceRolled", ({ ranNum }) => {
+      console.log("diceRolled");
       setRandomNumber(ranNum);
+
       if (randomNumber === 1) {
         changePlayer();
         setPlayer2Score(0);
@@ -28,7 +30,7 @@ export default function GameScreen(props) {
         addToScore(currentPlayer, randomNumber);
       }
     });
-  });
+  }, []);
   const changePlayer = () => {
     setCurrentPlayer((current) =>
       player1 == current ? setCurrentPlayer(player2) : setCurrentPlayer(player1)
@@ -42,7 +44,7 @@ export default function GameScreen(props) {
     }
   };
   const onRollDiceHandler = () => {
-    setRandomNumber(Math.ceil(Math.random() * 6));
+    console.log(RoomId);
     Socket.emit("RollDice", { roomId: RoomId });
   };
   const onHoldHandler = () => {

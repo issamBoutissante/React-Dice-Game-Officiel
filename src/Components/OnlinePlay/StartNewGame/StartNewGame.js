@@ -1,39 +1,36 @@
 import React, { useState, useEffect, useContext } from "react";
 import { NavLink, Redirect } from "react-router-dom";
-import io from "socket.io-client";
 import Dialog from "../../Dialog/Dialog";
 import { InfoContext } from "../../InfoContext/InfoContext";
-let socket;
 
 export default function StartNewGame() {
-  const { setRoomId, setSocket, RoomId } = useContext(InfoContext);
+  const { setRoomId, Socket, RoomId } = useContext(InfoContext);
   const [name, setName] = useState("");
   const [showId, setShowId] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const [FriendId, setFriendId] = useState("");
-  //whene game started
+  const [FriendName, setFriendName] = useState("");
+  const [showGame, setShowGame] = useState(false);
   useEffect(() => {
-    //initialize a socket
+    Socket.on("GameStarted", ({ friendName, hosterName }) => {
+      setFriendName(friendName);
+      setShowGame(true);
 
-    socket = io("http://localhost:5000");
-    setSocket(socket);
-    //on game started
-    socket.on("GameStarted", ({ friendName, hosterName }) => {
-      window.location.href = `/GameScreen?friendName=${friendName}&hosterName=${hosterName}&socket=${socket}&roomId=${RoomId}`;
+      //window.location.href = `/GameScreen?friendName=${friendName}&hosterName=${hosterName}&Socket=${Socket}&roomId=${RoomId}`;
     });
   }, []);
   const onAnswerHandler = (isAccepted) => {
-    socket.emit("requestAnswer", {
+    Socket.emit("requestAnswer", {
       isAccepted,
       name,
       nameId: FriendId,
     });
   };
   const onStartNewGameHandler = () => {
-    socket.emit("startNewGame", { name }, ({ roomId }) => {
+    Socket.emit("startNewGame", { name }, ({ roomId }) => {
       setRoomId(roomId);
       setShowId(true);
-      socket.on("joinRequest", ({ name, nameId }) => {
+      Socket.on("joinRequest", ({ name, nameId }) => {
         setFriendId(nameId);
         setShowDialog(true);
       });
@@ -53,6 +50,11 @@ export default function StartNewGame() {
         <input type="text" value={`this is your id : ${RoomId}`}></input>
       ) : null}
       {showDialog ? <Dialog onAnswerHandler={onAnswerHandler}></Dialog> : null}
+      {showGame ? (
+        <Redirect
+          to={`/GameScreen?friendName=${name}&hosterName=${FriendName}`}
+        ></Redirect>
+      ) : null}
     </div>
   );
 }
