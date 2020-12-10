@@ -1,20 +1,18 @@
 import React, { useContext, useState, useEffect } from "react";
-import { NavLink, Redirect } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import io from "socket.io-client";
-import Context from "../../ContexApi/ContexApi";
+import { InfoContext } from "../../InfoContext/InfoContext";
 let socket;
 
 export default function JoinGame() {
-  const { setRoomId, setSocket, RoomId } = useContext(Context);
+  const { setRoomId, setSocket, RoomId } = useContext(InfoContext);
   const [name, setName] = useState("s");
-  const [FriendName, setFriendName] = useState("");
   useEffect(() => {
     //initialize a socket
     socket = io("http://localhost:5000");
     setSocket(socket);
     //whene game started
     socket.on("GameStarted", ({ hosterName, friendName }) => {
-      setFriendName(hosterName);
       window.location.href = `/GameScreen?friendName=${friendName}&hosterName=${hosterName}`;
     });
   }, []);
@@ -36,6 +34,7 @@ export default function JoinGame() {
       <input
         type="text"
         placeholder="enter you name"
+        value={name}
         onChange={(e) => {
           setName(e.target.value);
           console.log(name);
@@ -44,16 +43,11 @@ export default function JoinGame() {
       <input
         type="text"
         placeholder="enter the game id"
+        value={RoomId}
         onChange={(e) => {
           setRoomId(e.target.value);
         }}
       ></input>
-      {/* <Redirect
-        to={{
-          pathname: "/GameScreen",
-          state: { socket },
-        }}
-      ></Redirect> */}
       <button onClick={onJoinGameHandler}>Join</button>
       <NavLink to="/"> Back</NavLink>
     </div>

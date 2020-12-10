@@ -2,26 +2,23 @@ import React, { useState, useEffect, useContext } from "react";
 import { NavLink, Redirect } from "react-router-dom";
 import io from "socket.io-client";
 import Dialog from "../../Dialog/Dialog";
-import Context from "../../ContexApi/ContexApi";
+import { InfoContext } from "../../InfoContext/InfoContext";
 let socket;
 
 export default function StartNewGame() {
-  const { setRoomId, setSocket, RoomId } = useContext(Context);
+  const { setRoomId, setSocket, RoomId } = useContext(InfoContext);
   const [name, setName] = useState("");
-  const [FriendName, setFriendName] = useState("");
   const [showId, setShowId] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const [FriendId, setFriendId] = useState("");
   //whene game started
   useEffect(() => {
     //initialize a socket
-    console.log("started again");
+
     socket = io("http://localhost:5000");
     setSocket(socket);
     //on game started
     socket.on("GameStarted", ({ friendName, hosterName }) => {
-      alert(friendName);
-      setFriendName(friendName);
       window.location.href = `/GameScreen?friendName=${friendName}&hosterName=${hosterName}&socket=${socket}&roomId=${RoomId}`;
     });
   }, []);
@@ -47,6 +44,7 @@ export default function StartNewGame() {
       <input
         type="text"
         placeholder="enter you name"
+        value={name}
         onChange={(e) => setName(e.target.value)}
       ></input>
       <button onClick={onStartNewGameHandler}>Start Game</button>

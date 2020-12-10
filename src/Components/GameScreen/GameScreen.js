@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./GameScreen.css";
 import querystring from "querystring";
-import Context from "../ContexApi/ContexApi";
+import { InfoContext } from "../InfoContext/InfoContext";
 
 export default function GameScreen(props) {
-  const { Socket, RoomId } = useContext(Context);
+  const { Socket, RoomId } = useContext(InfoContext);
   const [player1, setPlayer1] = useState("");
   const [player2, setPlayer2] = useState("");
   const [randomNumber, setRandomNumber] = useState(0);
@@ -13,22 +13,21 @@ export default function GameScreen(props) {
   const [player2Total, setPlayer2Total] = useState(0);
   const [player1Score, setPlayer1Score] = useState(0);
   const [player2Score, setPlayer2Score] = useState(0);
-
   //this function will be called each time a player ckick dice
   useEffect(() => {
     const params = querystring.parse(props.location.search);
     setPlayer1(params["hosterName"]);
     setPlayer2(params["?friendName"]);
-    //Socket.on("DiceRolled", ({ ranNum }) => {
-    //   setRandomNumber(ranNum);
-    //   if (randomNumber === 1) {
-    //     changePlayer();
-    //     setPlayer2Score(0);
-    //     setPlayer1Score(0);
-    //   } else {
-    //     addToScore(currentPlayer, randomNumber);
-    //   }
-    // });
+    Socket.on("DiceRolled", ({ ranNum }) => {
+      setRandomNumber(ranNum);
+      if (randomNumber === 1) {
+        changePlayer();
+        setPlayer2Score(0);
+        setPlayer1Score(0);
+      } else {
+        addToScore(currentPlayer, randomNumber);
+      }
+    });
   });
   const changePlayer = () => {
     setCurrentPlayer((current) =>
@@ -44,7 +43,7 @@ export default function GameScreen(props) {
   };
   const onRollDiceHandler = () => {
     setRandomNumber(Math.ceil(Math.random() * 6));
-    //Socket.emit("RollDice", { roomId: RoomId });
+    Socket.emit("RollDice", { roomId: RoomId });
   };
   const onHoldHandler = () => {
     if (currentPlayer == player1) {
@@ -58,11 +57,6 @@ export default function GameScreen(props) {
   };
   return (
     <section className="GameContainer">
-      <Context.Consumer>
-        {(cont) => {
-          console.log("from Game Screen" + cont.Socket);
-        }}
-      </Context.Consumer>
       <section className="GameScene">
         <section className="player1 player activePlayer">
           <section className="GessedNumberArea">
