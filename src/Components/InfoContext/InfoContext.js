@@ -4,14 +4,25 @@ export const InfoContext = createContext();
 const InfoContextProvider = ({ children }) => {
   const [Socket, setSocket] = useState(io("http://localhost:5000"));
   const [RoomId, setRoomId] = useState("");
-
+  const [HosterName, setHosterName] = useState("");
+  const [FriendName, setFriendName] = useState("");
   useEffect(() => {
     console.log(
       "==================================================================================="
     );
   }, []);
   return (
-    <InfoContext.Provider value={{ Socket, RoomId, setRoomId }}>
+    <InfoContext.Provider
+      value={{
+        Socket,
+        RoomId,
+        setRoomId,
+        setHosterName,
+        HosterName,
+        setFriendName,
+        FriendName,
+      }}
+    >
       {children}
     </InfoContext.Provider>
   );

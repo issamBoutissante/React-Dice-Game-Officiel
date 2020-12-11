@@ -3,13 +3,19 @@ import { NavLink, Redirect } from "react-router-dom";
 import { InfoContext } from "../../InfoContext/InfoContext";
 
 export default function JoinGame() {
-  const { setRoomId, Socket, RoomId } = useContext(InfoContext);
-  const [name, setName] = useState("");
-  const [FriendName, setFriendName] = useState("");
+  const {
+    setRoomId,
+    Socket,
+    RoomId,
+    setFriendName,
+    setHosterName,
+    FriendName,
+    HosterName,
+  } = useContext(InfoContext);
   const [showGame, setShowGame] = useState(false);
   useEffect(() => {
-    Socket.on("GameStarted", ({ hosterName, friendName }) => {
-      setFriendName(hosterName);
+    Socket.on("GameStarted", ({ hosterName }) => {
+      setHosterName(hosterName);
       setShowGame(true);
       //window.location.href = `/GameScreen?friendName=${friendName}&hosterName=${hosterName}`;
     });
@@ -22,9 +28,13 @@ export default function JoinGame() {
       alert(error);
       Socket.emit("leave", { roomId: RoomId });
     });
-    Socket.emit("joinGame", { name, roomId: RoomId }, ({ error }) => {
-      if (error) alert(error);
-    });
+    Socket.emit(
+      "joinGame",
+      { name: FriendName, roomId: RoomId },
+      ({ error }) => {
+        if (error) alert(error);
+      }
+    );
   };
 
   return (
@@ -32,10 +42,8 @@ export default function JoinGame() {
       <input
         type="text"
         placeholder="enter you name"
-        value={name}
         onChange={(e) => {
-          setName(e.target.value);
-          console.log(name);
+          setFriendName(e.target.value);
         }}
       ></input>
       <input
@@ -47,11 +55,7 @@ export default function JoinGame() {
       ></input>
       <button onClick={onJoinGameHandler}>Join</button>
       <NavLink to="/"> Back</NavLink>
-      {showGame ? (
-        <Redirect
-          to={`/GameScreen?friendName=${name}&hosterName=${FriendName}`}
-        ></Redirect>
-      ) : null}
+      {showGame ? <Redirect to={"/GameScreen"}></Redirect> : null}
     </div>
   );
 }
