@@ -16,7 +16,7 @@ export default function OnlinePlay() {
         </Route>
         <Route path="/StartNewGame" exact component={StartNewGame}></Route>
         <Route path="/JoinGame" exact component={JoinGame}></Route>
-        <Route path="/GameScreen" exact component={TestGame}></Route>
+        <Route path="/GameScreen" exact component={GameScreen}></Route>
       </BrowserRouter>
     </div>
   );

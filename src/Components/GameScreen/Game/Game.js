@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 const Game = ({
   player1,
   player2,
@@ -9,11 +9,13 @@ const Game = ({
   onRollDiceHandler,
   onHoldHandler,
   randomNumber,
+  player1StyleRef,
+  player2StyleRef,
 }) => {
   return (
     <section className="GameContainer">
       <section className="GameScene">
-        <section className="player1 player activePlayer">
+        <section ref={player1StyleRef} className="player1 player activePlayer">
           <section className="GessedNumberArea">
             <h1>{player1}</h1>
             <h1 className="total_1 number">{player1Total}</h1>
@@ -31,7 +33,7 @@ const Game = ({
         <div className="buttons Buttons below hold" onClick={onHoldHandler}>
           Hold
         </div>
-        <section className="player2 player">
+        <section ref={player2StyleRef} className="player2 player">
           <section className="GessedNumberArea">
             <h1>{player2}</h1>
             <h1 className="total_2 number">{player2Total}</h1>
