@@ -1,15 +1,4 @@
-import React, { useState, useEffect, useContext, Component } from "react";
-import "./GameScreen.css";
-import { InfoContext } from "../InfoContext/InfoContext";
-import Game from "./Game/Game";
-
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  Component,
-  useRef,
-} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import "./GameScreen.css";
 import { InfoContext } from "../InfoContext/InfoContext";
 import Game from "./Game/Game";
@@ -17,10 +6,10 @@ import Game from "./Game/Game";
 export default function GameScreen(props) {
   const { Socket, RoomId, HosterName, FriendName } = useContext(InfoContext);
   const [finalScore, setFinalScore] = useState(15);
-  const [player1] = useState(HosterName);
-  const [player2] = useState(FriendName);
+  const [player1] = useState("HosterName");
+  const [player2] = useState("FriendName");
   const [randomNumber, setRandomNumber] = useState(0);
-  const [currentPlayer, setCurrentPlayer] = useState(HosterName);
+  const [currentPlayer, setCurrentPlayer] = useState("HosterName");
   const [player1Total, setPlayer1Total] = useState(0);
   const [player2Total, setPlayer2Total] = useState(0);
   const [player1Score, setPlayer1Score] = useState(0);
@@ -47,13 +36,10 @@ export default function GameScreen(props) {
     });
     Socket.on("ScoreHolded", ({ score }) => {
       if (currentPlayer === player1) {
-        setPlayer1Total((prev) => prev + score);
+        setPlayer1Total(player1Total + score);
       } else {
-        setPlayer2Total((prev) => prev + score);
+        setPlayer2Total(player2Total + score);
       }
-      TogglePlayer();
-      setPlayer1Score(0);
-      setPlayer2Score(0);
     });
   }, []);
   //this player will toggle players and their style
@@ -80,11 +66,22 @@ export default function GameScreen(props) {
   };
   useEffect(() => {
     CheckWinner();
+    TogglePlayer();
+    setPlayer1Score(0);
+    setPlayer2Score(0);
+    console.log(`The hoster is ${HosterName}`);
+    console.log(`The Friend is ${FriendName}`);
+    console.log(`The current Player is ${currentPlayer}`);
   }, [player1Total, player2Total]);
   const onHoldHandler = () => {
-    currentPlayer == player1
-      ? Socket.emit("Hold", { score: player1Score })
-      : Socket.emit("Hold", { score: player2Score });
+    console.log("==================================");
+    if (currentPlayer === player1) {
+      Socket.emit("Hold", { roomId: RoomId, score: player1Score });
+      console.log(`'Hold' player1 score is ${player1Score}`);
+    } else {
+      Socket.emit("Hold", { roomId: RoomId, score: player2Score });
+      console.log(`'Hold' player2 score is ${player2Score}`);
+    }
   };
 
   return (
