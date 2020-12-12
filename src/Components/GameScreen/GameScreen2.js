@@ -73,8 +73,16 @@ export default class GameScreen extends Component {
         };
       });
     }
-    this.togglePlayer();
+    this.CheckWinner();
     this.resetScore();
+  }
+  //this function will run whene the game over
+  onGameOverHandler({ winner }) {
+    if (winner === this.state.player1) {
+      this.player1StyleRef.current.classList.add("winer");
+    } else {
+      this.player2StyleRef.current.classList.add("winer");
+    }
   }
   //this player will toggle players and their style
   togglePlayer() {
@@ -99,6 +107,28 @@ export default class GameScreen extends Component {
       player2Score: 0,
     });
   }
+  //this function will check if there is a winner
+  CheckWinner() {
+    const { Socket } = this.context;
+    console.log("Begining================================================");
+    console.log(`the final Score is ${this.state.finalScore}`);
+    console.log(
+      `the player 1  compared with final score ${
+        this.state.player1Total >= this.state.finalScore
+      }`
+    );
+    console.log(`the player 2  total is ${this.state.player2Total}`);
+    console.log("End================================================");
+    if (this.state.player1Total >= this.state.finalScore) {
+      console.log("is bigger");
+      Socket.emit("GameOver", { winner: this.state.player1 });
+    } else if (this.state.player2Total >= this.state.finalScore) {
+      Socket.emit("GameOver", { winner: this.state.player2 });
+    } else {
+      console.log("again");
+      this.togglePlayer();
+    }
+  }
   componentDidMount() {
     const { HosterName, FriendName, Socket } = this.context;
     this.setState({
@@ -108,6 +138,7 @@ export default class GameScreen extends Component {
     });
     Socket.on("DiceRolled", this.DiceRolledHandler.bind(this));
     Socket.on("ScoreHolded", this.ScoreHoldedHandler.bind(this));
+    Socket.on("GameOvered", this.onGameOverHandler.bind(this));
   }
 
   render() {

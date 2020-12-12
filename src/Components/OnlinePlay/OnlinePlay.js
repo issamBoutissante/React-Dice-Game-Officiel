@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { BrowserRouter, Route, NavLink } from "react-router-dom";
 import StartNewGame from "./StartNewGame/StartNewGame";
 import JoinGame from "./JoinGame/JoinGame";
-import GameScreen from "../GameScreen/GameScreen";
 import GameScreenTwo from "../GameScreen/GameScreen2";
 export default function OnlinePlay() {
   return (
