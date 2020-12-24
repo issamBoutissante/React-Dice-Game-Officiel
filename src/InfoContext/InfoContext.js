@@ -3,7 +3,9 @@ import io from "socket.io-client";
 export const InfoContext = createContext();
 const InfoContextProvider = ({ children }) => {
   const [isHoster, setIsHoster] = useState(false);
-  const [Socket, setSocket] = useState(io("http://localhost:5000"));
+  const [Socket, setSocket] = useState(
+    io("https://backend-dice-game.herokuapp.com/")
+  );
   const [RoomId, setRoomId] = useState("");
   const [HosterName, setHosterName] = useState("");
   const [FriendName, setFriendName] = useState("");
