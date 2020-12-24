@@ -1,36 +1,38 @@
 import React from "react";
-import Modal from "../HomeScreen/Modal/Modal";
-//const { ipcRenderer } = window.require("electron");
-
-const Dialog = ({ CloseModal, clickAudio }) => {
-  const onCloseAppHandler = () => {
-    //    ipcRenderer.send("CloseApp");
-  };
+import Modal from "../Modal/Modal";
+const RequestModal = ({
+  onAnswerHandler,
+  CloseModal,
+  friendName,
+  clickAudio,
+}) => {
   return (
     <Modal CloseModal={CloseModal}>
       <div>
-        <label for="name">Are you sure you want to close the game ?</label>
+        <label for="name">
+          {friendName} wants to play with you. Do you Accept ?
+        </label>
         <div class="acceptRefuse">
           <button
             onClick={() => {
               clickAudio.play();
-              onCloseAppHandler();
+              onAnswerHandler(true);
             }}
           >
-            Close
+            Accept
           </button>
           <button
             style={{ backgroundColor: "#ccc" }}
             onClick={() => {
               clickAudio.play();
-              CloseModal();
+              onAnswerHandler(false);
             }}
           >
-            Cancel
+            Refuse
           </button>
         </div>
       </div>
     </Modal>
   );
 };
-export default Dialog;
+export default RequestModal;

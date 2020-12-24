@@ -1,6 +1,6 @@
 import React from "react";
 import InfoContextProvider from "./InfoContext/InfoContext";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import HomeScreen from "./Components/HomeScreen/HomeScreen";
 import GameScreen from "./Components/GameScreen/GameScreen";
 import GameScreenOffline from "./Components/GameScreenOffline/GameScreenOffline";

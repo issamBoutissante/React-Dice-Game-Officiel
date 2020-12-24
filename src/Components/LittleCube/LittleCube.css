@@ -1,0 +1,139 @@
+/*the commun code for active and notActive*/
+
+.cubelittleContainer {
+  position: relative;
+  margin-left: 8px;
+  margin-top: 10px;
+  height: 30px;
+  width: 30px;
+  perspective: 1000px;
+}
+#littleCube {
+  width: inherit;
+  height: inherit;
+  transform-style: preserve-3d;
+}
+
+.littleSide {
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  backface-visibility: hidden;
+  border: 1px solid #50abf1;
+}
+.littleFace1 {
+  transform: translateZ(15px);
+}
+.littleFace2 {
+  transform: rotateY(180deg) translateZ(15px);
+}
+.littleFace3 {
+  transform: rotateY(90deg) translateZ(15px);
+}
+.littleFace4 {
+  transform: rotateY(-90deg) translateZ(15px);
+}
+.littleFace5 {
+  transform: rotateX(90deg) translateZ(15px);
+}
+.littleFace6 {
+  transform: rotateX(-90deg) translateZ(15px);
+}
+.littleDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  position: absolute;
+}
+/*littleFace1*/
+.littleFace1 .littleDot1 {
+  top: 12px;
+  left: 12px;
+}
+/*littleFace2*/
+.littleFace2 .littleDot1 {
+  bottom: 24px;
+  right: 24px;
+}
+.littleFace2 .littleDot2 {
+  top: 24px;
+  left: 24px;
+}
+/*littleFace3*/
+.littleFace3 .littleDot1 {
+  top: 12px;
+  left: 12px;
+}
+.littleFace3 .littleDot2 {
+  bottom: 24px;
+  right: 24px;
+}
+.littleFace3 .littleDot3 {
+  top: 24px;
+  left: 24px;
+}
+/*littleFace4*/
+.littleFace4 .littleDot1 {
+  bottom: 24px;
+  right: 24px;
+}
+.littleFace4 .littleDot2 {
+  bottom: 24px;
+  left: 24px;
+}
+.littleFace4 .littleDot3 {
+  top: 24px;
+  right: 24px;
+}
+.littleFace4 .littleDot4 {
+  top: 24px;
+  left: 24px;
+}
+/*littleFace5*/
+.littleFace5 .littleDot1 {
+  bottom: 24px;
+  right: 24px;
+}
+.littleFace5 .littleDot2 {
+  bottom: 24px;
+  left: 24px;
+}
+.littleFace5 .littleDot3 {
+  top: 24px;
+  right: 24px;
+}
+.littleFace5 .littleDot4 {
+  top: 24px;
+  left: 24px;
+}
+.littleFace5 .littleDot5 {
+  top: 12px;
+  left: 12px;
+}
+/*face15*/
+.littleFace6 .littleDot1 {
+  bottom: 24px;
+  right: 24px;
+}
+.littleFace6 .littleDot2 {
+  bottom: 24px;
+  left: 24px;
+}
+.littleFace6 .littleDot3 {
+  top: 24px;
+  right: 24px;
+}
+.littleFace6 .littleDot4 {
+  top: 24px;
+  left: 24px;
+}
+.littleFace6 .littleDot5 {
+  right: 12px;
+  left: 12px;
+  bottom: 24px;
+}
+.littleFace6 .littleDot6 {
+  right: 12px;
+  left: 12px;
+  top: 24px;
+}

@@ -1,0 +1,157 @@
+body {
+  --BlueColor: rgb(0, 89, 255);
+  --halfRoll: rotateX(-810deg) rotateY(-1890deg);
+  --fullRoll: rotateX(810deg) rotateY(1890deg);
+}
+.cubeContainer {
+  position: relative;
+  margin: -40% auto;
+  height: 130px;
+  width: 130px;
+  perspective: 500px;
+}
+#GameCube {
+  width: inherit;
+  height: inherit;
+  transform-style: preserve-3d;
+}
+
+.RollDice {
+  animation-name: RollDiceAnim;
+  animation-timing-function: ease;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+@keyframes RollDiceAnim {
+  50% {
+    transform: var(--halfRoll);
+  }
+  100% {
+    transform: var(--fullRoll);
+  }
+}
+.GameSide {
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  backface-visibility: hidden;
+  border: 2px solid var(--BlueColor);
+  background-color: white;
+}
+.GameFace1 {
+  transform: translateZ(65px);
+}
+.GameFace2 {
+  transform: rotateY(180deg) translateZ(65px);
+}
+.GameFace3 {
+  transform: rotateY(90deg) translateZ(65px);
+}
+.GameFace4 {
+  transform: rotateY(-90deg) translateZ(65px);
+}
+.GameFace5 {
+  transform: rotateX(90deg) translateZ(65px);
+}
+.GameFace6 {
+  transform: rotateX(-90deg) translateZ(65px);
+}
+.GameDot {
+  background-color: var(--BlueColor);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  position: absolute;
+}
+/*face1*/
+.GameFace1 .GameDot1 {
+  top: 56px;
+  left: 56px;
+}
+/*face2*/
+.GameFace2 .GameDot1 {
+  bottom: 100px;
+  right: 100px;
+}
+.GameFace2 .GameDot2 {
+  top: 100px;
+  left: 100px;
+}
+/*face3*/
+.GameFace3 .GameDot1 {
+  top: 56px;
+  left: 56px;
+}
+.GameFace3 .GameDot2 {
+  bottom: 100px;
+  right: 100px;
+}
+.GameFace3 .GameDot3 {
+  top: 100px;
+  left: 100px;
+}
+/*face4*/
+.GameFace4 .GameDot1 {
+  bottom: 100px;
+  right: 100px;
+}
+.GameFace4 .GameDot2 {
+  bottom: 100px;
+  left: 100px;
+}
+.GameFace4 .GameDot3 {
+  top: 100px;
+  right: 100px;
+}
+.GameFace4 .GameDot4 {
+  top: 100px;
+  left: 100px;
+}
+/*face5*/
+.GameFace5 .GameDot1 {
+  bottom: 100px;
+  right: 100px;
+}
+.GameFace5 .GameDot2 {
+  bottom: 100px;
+  left: 100px;
+}
+.GameFace5 .GameDot3 {
+  top: 100px;
+  right: 100px;
+}
+.GameFace5 .GameDot4 {
+  top: 100px;
+  left: 100px;
+}
+.GameFace5 .GameDot5 {
+  top: 56px;
+  left: 56px;
+}
+/*face6*/
+.GameFace6 .GameDot1 {
+  bottom: 100px;
+  right: 100px;
+}
+.GameFace6 .GameDot2 {
+  bottom: 100px;
+  left: 100px;
+}
+.GameFace6 .GameDot3 {
+  top: 100px;
+  right: 100px;
+}
+.GameFace6 .GameDot4 {
+  top: 100px;
+  left: 100px;
+}
+.GameFace6 .GameDot5 {
+  right: 56px;
+  left: 56px;
+  bottom: 100px;
+}
+.GameFace6 .GameDot6 {
+  right: 56px;
+  left: 56px;
+  top: 100px;
+}

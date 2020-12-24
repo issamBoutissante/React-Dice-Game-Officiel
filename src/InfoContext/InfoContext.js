@@ -1,16 +1,16 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext } from "react";
 import io from "socket.io-client";
 export const InfoContext = createContext();
 const InfoContextProvider = ({ children }) => {
-  const [Socket, setSocket] = useState(io("http://localhost:5000"));
+  const [isHoster, setIsHoster] = useState(false);
+  const [Socket, setSocket] = useState(
+    io("https://backend-dice-game.herokuapp.com/")
+  );
   const [RoomId, setRoomId] = useState("");
   const [HosterName, setHosterName] = useState("");
   const [FriendName, setFriendName] = useState("");
-  useEffect(() => {
-    console.log(
-      "==================================================================================="
-    );
-  }, []);
+  const [FriendId, setFriendId] = useState("");
+
   return (
     <InfoContext.Provider
       value={{
@@ -21,6 +21,10 @@ const InfoContextProvider = ({ children }) => {
         HosterName,
         setFriendName,
         FriendName,
+        isHoster,
+        setIsHoster,
+        FriendId,
+        setFriendId,
       }}
     >
       {children}

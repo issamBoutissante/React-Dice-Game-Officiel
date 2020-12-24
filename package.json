@@ -1,14 +1,17 @@
 {
-  "name": "testdice",
+  "name": "dicegame",
   "version": "0.1.0",
   "private": true,
+  "description": "this is a dice game and it was builded by Chaimae mazzouz and Boutissante issam",
+  "author": "Mazzouz Chaimae && Boutissante Issam",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
-    "@testing-library/user-event": "^12.5.0",
+    "@testing-library/user-event": "^12.6.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
+    "react-script-tag": "^1.1.2",
     "react-scripts": "4.0.1",
     "socket.io-client": "^3.0.4",
     "web-vitals": "^0.2.4"

@@ -1,0 +1,138 @@
+#Cube {
+  width: 150px;
+  height: 150px;
+  transform-style: preserve-3d;
+  transition: transform 4s;
+  animation: Cube 4s infinite;
+  animation-timing-function: linear;
+  --BlueColor: rgb(0, 89, 255);
+}
+@keyframes Cube {
+  100% {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+.side {
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  backface-visibility: hidden;
+  border: 2px solid var(--BlueColor);
+}
+.face1 {
+  transform: translateZ(75px);
+}
+.face2 {
+  transform: rotateY(180deg) translateZ(75px);
+}
+.face3 {
+  transform: rotateY(90deg) translateZ(75px);
+}
+.face4 {
+  transform: rotateY(-90deg) translateZ(75px);
+}
+.face5 {
+  transform: rotateX(90deg) translateZ(75px);
+}
+.face6 {
+  transform: rotateX(-90deg) translateZ(75px);
+}
+.dot {
+  background-color: var(--BlueColor);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: absolute;
+}
+/*face1*/
+.face1 .dot1 {
+  top: 65px;
+  left: 65px;
+}
+/*face2*/
+.face2 .dot1 {
+  bottom: 100px;
+  right: 100px;
+}
+.face2 .dot2 {
+  top: 100px;
+  left: 100px;
+}
+/*face3*/
+.face3 .dot1 {
+  top: 65px;
+  left: 65px;
+}
+.face3 .dot2 {
+  bottom: 100px;
+  right: 100px;
+}
+.face3 .dot3 {
+  top: 100px;
+  left: 100px;
+}
+/*face4*/
+.face4 .dot1 {
+  bottom: 100px;
+  right: 100px;
+}
+.face4 .dot2 {
+  bottom: 100px;
+  left: 100px;
+}
+.face4 .dot3 {
+  top: 100px;
+  right: 100px;
+}
+.face4 .dot4 {
+  top: 100px;
+  left: 100px;
+}
+/*face5*/
+.face5 .dot1 {
+  bottom: 100px;
+  right: 100px;
+}
+.face5 .dot2 {
+  bottom: 100px;
+  left: 100px;
+}
+.face5 .dot3 {
+  top: 100px;
+  right: 100px;
+}
+.face5 .dot4 {
+  top: 100px;
+  left: 100px;
+}
+.face5 .dot5 {
+  top: 65px;
+  left: 65px;
+}
+/*face6*/
+.face6 .dot1 {
+  bottom: 100px;
+  right: 100px;
+}
+.face6 .dot2 {
+  bottom: 100px;
+  left: 100px;
+}
+.face6 .dot3 {
+  top: 100px;
+  right: 100px;
+}
+.face6 .dot4 {
+  top: 100px;
+  left: 100px;
+}
+.face6 .dot5 {
+  right: 65px;
+  left: 65px;
+  bottom: 100px;
+}
+.face6 .dot6 {
+  right: 65px;
+  left: 65px;
+  top: 100px;
+}
