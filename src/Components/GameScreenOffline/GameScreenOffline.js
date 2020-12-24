@@ -3,7 +3,9 @@ import { InfoContext } from "../../InfoContext/InfoContext";
 import Game from "../Game/Game";
 import WinnerLayout from "../Game/WinnerLayout/WinnerLayout";
 import rollSound from "../../assets/rollSound.mp3";
+import loseScoreSound from "../../assets/loseScore.mp3";
 let rollAudio = new Audio(rollSound);
+let LoseScoreAudio = new Audio(loseScoreSound);
 const position = {
   1: ["rotateX(180deg) rotateY(1260deg)", "rotateX(-180deg) rotateY(-1260deg)"],
   2: [
@@ -61,8 +63,7 @@ export default class GameScreenOffline extends Component {
   //ChangeScore
   ChangeScore({ ranNum }) {
     if (ranNum === 1) {
-      //Here we have to add a sound for losing score
-      //and vibre the cube
+      LoseScoreAudio.play();
       this.togglePlayer();
       this.resetScore();
     } else {
@@ -105,12 +106,8 @@ export default class GameScreenOffline extends Component {
   onHoldHandler() {
     if (this.state.currentPlayer === this.state.player1) {
       let time = 0;
-      setTimeout(() => {
-        this.CheckWinner();
-        this.resetScore();
-      }, this.state.player1Score * 50);
 
-      for (let i = 0; i < this.state.player1Score; i++) {
+      for (let i = 1; i <= this.state.player1Score; i++) {
         time += 50;
         setTimeout(() => {
           this.setState((prev) => {
@@ -118,15 +115,15 @@ export default class GameScreenOffline extends Component {
               player1Total: prev.player1Total + 1,
             };
           });
+          if (i === this.state.player1Score) {
+            this.CheckWinner();
+            this.resetScore();
+          }
         }, time);
       }
     } else {
       let time = 0;
-      setTimeout(() => {
-        this.CheckWinner();
-        this.resetScore();
-      }, this.state.player2Score * 50);
-      for (let i = 0; i < this.state.player2Score; i++) {
+      for (let i = 1; i <= this.state.player2Score; i++) {
         time += 50;
         setTimeout(() => {
           this.setState((prev) => {
@@ -134,6 +131,10 @@ export default class GameScreenOffline extends Component {
               player2Total: prev.player2Total + 1,
             };
           });
+          if (i === this.state.player2Score) {
+            this.CheckWinner();
+            this.resetScore();
+          }
         }, time);
       }
     }
@@ -180,9 +181,9 @@ export default class GameScreenOffline extends Component {
   }
   //this function will check if there is a winner
   CheckWinner() {
-    if (this.state.player1Total > this.state.finalScore - 1) {
+    if (this.state.player1Total >= this.state.finalScore) {
       this.onGameOverHandler({ winner: this.state.player1 });
-    } else if (this.state.player2Total > this.state.finalScore - 1) {
+    } else if (this.state.player2Total >= this.state.finalScore) {
       this.onGameOverHandler({ winner: this.state.player2 });
     } else {
       this.togglePlayer();

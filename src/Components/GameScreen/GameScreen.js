@@ -3,7 +3,9 @@ import { InfoContext } from "../../InfoContext/InfoContext";
 import Game from "../Game/Game";
 import WinnerLayout from "../Game/WinnerLayout/WinnerLayout";
 import rollSound from "../../assets/rollSound.mp3";
+import loseSound from "../../assets/loseSound.mp3";
 let rollAudio = new Audio(rollSound);
+let loseScoreAudio = new Audio(loseSound);
 
 const position = {
   1: ["rotateX(180deg) rotateY(1260deg)", "rotateX(-180deg) rotateY(-1260deg)"],
@@ -78,8 +80,7 @@ export default class GameScreen extends Component {
   //ChangeScore
   ChangeScore({ ranNum }) {
     if (ranNum === 1) {
-      //Here we have to add a sound for losing score
-      //and vibre the cube
+      loseScoreAudio.play();
       this.togglePlayer();
       this.resetScore();
     } else {
@@ -120,14 +121,10 @@ export default class GameScreen extends Component {
   }
   //this function will run when a player hold his points
   ScoreHoldedHandler({ score }) {
-    setTimeout(() => {
-      this.CheckWinner();
-      this.resetScore();
-    }, score * 50);
     if (this.state.currentPlayer === this.state.player1) {
       let time = 0;
 
-      for (let i = 0; i < score; i++) {
+      for (let i = 1; i <= score; i++) {
         time += 50;
         setTimeout(() => {
           this.setState((prev) => {
@@ -135,12 +132,15 @@ export default class GameScreen extends Component {
               player1Total: prev.player1Total + 1,
             };
           });
+          if (i === score) {
+            this.CheckWinner();
+            this.resetScore();
+          }
         }, time);
       }
     } else {
       let time = 0;
-
-      for (let i = 0; i < score; i++) {
+      for (let i = 1; i <= score; i++) {
         time += 50;
         setTimeout(() => {
           this.setState((prev) => {
@@ -148,6 +148,10 @@ export default class GameScreen extends Component {
               player2Total: prev.player2Total + 1,
             };
           });
+          if (i === score) {
+            this.CheckWinner();
+            this.resetScore();
+          }
         }, time);
       }
     }
@@ -186,9 +190,9 @@ export default class GameScreen extends Component {
   //this function will check if there is a winner
   CheckWinner() {
     const { Socket } = this.context;
-    if (this.state.player1Total > this.state.finalScore) {
+    if (this.state.player1Total >= this.state.finalScore) {
       Socket.emit("GameOver", { winner: this.state.player1 });
-    } else if (this.state.player2Total > this.state.finalScore) {
+    } else if (this.state.player2Total >= this.state.finalScore) {
       Socket.emit("GameOver", { winner: this.state.player2 });
     } else {
       this.togglePlayer();
