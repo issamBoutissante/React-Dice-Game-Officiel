@@ -1,10 +1,10 @@
 import React from "react";
 import Modal from "../HomeScreen/Modal/Modal";
-const { ipcRenderer } = window.require("electron");
+//const { ipcRenderer } = window.require("electron");
 
 const Dialog = ({ CloseModal, clickAudio }) => {
   const onCloseAppHandler = () => {
-    ipcRenderer.send("CloseApp");
+    //ipcRenderer.send("CloseApp");
   };
   return (
     <Modal CloseModal={CloseModal}>

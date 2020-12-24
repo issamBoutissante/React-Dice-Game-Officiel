@@ -1,5 +1,5 @@
 body {
-  --BlueColor: rgb(0, 89, 255);
+  --BlueColor: rgb(25, 0, 255);
   --halfRoll: rotateX(-810deg) rotateY(-1890deg);
   --fullRoll: rotateX(810deg) rotateY(1890deg);
 }
@@ -35,8 +35,9 @@ body {
   width: inherit;
   height: inherit;
   backface-visibility: hidden;
-  border: 2px solid var(--BlueColor);
+  border: 5px solid var(--BlueColor);
   background-color: white;
+  padding: 30px;
 }
 .GameFace1 {
   transform: translateZ(65px);
@@ -58,15 +59,16 @@ body {
 }
 .GameDot {
   background-color: var(--BlueColor);
-  width: 18px;
-  height: 18px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
   position: absolute;
+  margin: -10px;
 }
 /*face1*/
 .GameFace1 .GameDot1 {
-  top: 56px;
-  left: 56px;
+  top: 52.5px;
+  left: 52.5px;
 }
 /*face2*/
 .GameFace2 .GameDot1 {
@@ -79,8 +81,8 @@ body {
 }
 /*face3*/
 .GameFace3 .GameDot1 {
-  top: 56px;
-  left: 56px;
+  top: 52.5px;
+  left: 52.5px;
 }
 .GameFace3 .GameDot2 {
   bottom: 100px;
@@ -125,8 +127,8 @@ body {
   left: 100px;
 }
 .GameFace5 .GameDot5 {
-  top: 56px;
-  left: 56px;
+  top: 52.5px;
+  left: 52.5px;
 }
 /*face6*/
 .GameFace6 .GameDot1 {
@@ -146,12 +148,12 @@ body {
   left: 100px;
 }
 .GameFace6 .GameDot5 {
-  right: 56px;
-  left: 56px;
+  right: 52.5px;
+  left: 52.5px;
   bottom: 100px;
 }
 .GameFace6 .GameDot6 {
-  right: 56px;
-  left: 56px;
+  right: 52.5px;
+  left: 52.5px;
   top: 100px;
 }
