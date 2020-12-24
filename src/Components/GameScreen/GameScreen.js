@@ -3,9 +3,9 @@ import { InfoContext } from "../../InfoContext/InfoContext";
 import Game from "../Game/Game";
 import WinnerLayout from "../Game/WinnerLayout/WinnerLayout";
 import rollSound from "../../assets/rollSound.mp3";
-import loseSound from "../../assets/loseSound.mp3";
+import loseScore from "../../assets/loseScore.mp3";
 let rollAudio = new Audio(rollSound);
-let loseScoreAudio = new Audio(loseSound);
+let loseScoreAudio = new Audio(loseScore);
 
 const position = {
   1: ["rotateX(180deg) rotateY(1260deg)", "rotateX(-180deg) rotateY(-1260deg)"],
